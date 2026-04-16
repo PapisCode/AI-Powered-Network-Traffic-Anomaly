@@ -24,6 +24,8 @@ def initialize_log():
                 "unique_src_ips",
                 "unique_dst_ips",
                 "unique_dst_ports",
+                "max_requests_from_single_ip",
+                "most_targeted_port_count",
                 "result"
             ])
 
@@ -43,6 +45,8 @@ def log_result(features, result):
             features["unique_src_ips"],
             features["unique_dst_ips"],
             features["unique_dst_ports"],
+            features["max_requests_from_single_ip"],
+            features["most_targeted_port_count"],
             result
         ])
 

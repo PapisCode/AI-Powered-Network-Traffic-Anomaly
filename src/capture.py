@@ -16,14 +16,16 @@ def process_packet(packet):
         return
 
     feature_vector = [
-        features["packet_count"],
-        features["tcp_count"],
-        features["udp_count"],
-        features["icmp_count"],
-        features["unique_src_ips"],
-        features["unique_dst_ips"],
-        features["unique_dst_ports"],
-    ]
+    features["packet_count"],
+    features["tcp_count"],
+    features["udp_count"],
+    features["icmp_count"],
+    features["unique_src_ips"],
+    features["unique_dst_ips"],
+    features["unique_dst_ports"],
+    features["max_requests_from_single_ip"],
+    features["most_targeted_port_count"],
+]
 
     try:
         if not detector.trained:
