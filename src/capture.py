@@ -1,6 +1,7 @@
 from scapy.all import sniff
 from features import TrafficFeatures
 from model import AnomalyDetector
+from alerting import initialize_log, log_result, print_alert
 
 feature_extractor = TrafficFeatures(window_size=5)
 detector = AnomalyDetector()
@@ -25,7 +26,6 @@ def process_packet(packet):
     ]
 
     try:
-        # Collect training data first
         if not detector.trained:
             training_data.append(feature_vector)
 
@@ -41,7 +41,6 @@ def process_packet(packet):
             print()
             return
 
-        # Predict after training
         result = detector.predict(feature_vector)
 
         print("\n=== Traffic Analysis (5s window) ===")
@@ -50,10 +49,14 @@ def process_packet(packet):
         print(f"result: {result}")
         print("====================================\n")
 
+        log_result(features, result)
+        print_alert(result)
+
     except Exception as e:
         print(f"Error during traffic analysis: {e}")
 
 
 def start_sniffing():
     print("Starting packet capture with feature extraction and anomaly detection...")
+    initialize_log()
     sniff(prn=process_packet, store=False)
